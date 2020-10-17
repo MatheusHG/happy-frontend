@@ -12,9 +12,9 @@ import '../styles/pages/orphanages-map.css';
 function LightOrDark(){
     const date = new Date();
     const Hours = date.getHours();
-    
+
     var theme = "light";
-    if(Hours > 18 || Hours < 5) theme = "dark";
+    if(Hours >= 18 || Hours < 5) theme = "dark";
     
     return theme;
 } 
@@ -45,7 +45,7 @@ function OrphanagesMap() {
                 <TileLayer url={`https://api.mapbox.com/styles/v1/mapbox/${LightOrDark()}-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`} />
             </Map>
 
-            <Link to="" className="create-orphanage" >
+            <Link to="" className="create-orphanage has-shown" >
                 <FiPlus size={32} color="#fff" />
             </Link>
         </div>
