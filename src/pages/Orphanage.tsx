@@ -9,7 +9,16 @@ import mapIcon from "../utils/mapIcon";
 
 import '../styles/pages/orphanage.css';
 import api from "../services/api";
-import Loading from '../components/Loading';
+
+function LightOrDark(){
+  const date = new Date();
+  const Hours = date.getHours();
+
+  var theme = "light";
+  if(Hours >= 18 || Hours < 5) theme = "dark";
+  
+  return theme;
+}
 
 interface RouterParams {
   id: string;
@@ -31,20 +40,17 @@ interface Orphanage {
 
 export default function Orphanage() {
   const params = useParams<RouterParams>();
-  const [loading, setLoading] = useState<boolean>(false);
   const [orphanage, setOrphanage] = useState<Orphanage>();
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   useEffect(() => {
-    setLoading(true);
     api.get(`/orphanages/${params.id}`).then(response => {
       setOrphanage(response.data);
     });
-    setLoading(false);
   }, [params.id]);
 
   if(!orphanage) {
-    return <Loading open={loading}/>;
+    return <p>Carregando...</p>
   }
 
   return (
@@ -91,7 +97,7 @@ export default function Orphanage() {
                 doubleClickZoom={false}
               >
                 <TileLayer 
-                  url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
+                  url={`https://api.mapbox.com/styles/v1/mapbox/${LightOrDark()}-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
                 />
                 <Marker interactive={false} icon={mapIcon} position={[orphanage.latitude, orphanage.longitude]} />
               </Map>
@@ -135,7 +141,6 @@ export default function Orphanage() {
           </div>
         </div>
       </main>
-      <Loading open={loading}/>
     </div>
   );
 }

@@ -8,7 +8,6 @@ import '../styles/pages/orphanages-map.css';
 import mapMarkerImg from '../images/map-marker.svg';
 import mapIcon from '../utils/mapIcon';
 import api from '../services/api';
-import Loading from '../components/Loading';
 
 function LightOrDark(){
     const date = new Date();
@@ -18,7 +17,7 @@ function LightOrDark(){
     if(Hours >= 18 || Hours < 5) theme = "dark";
     
     return theme;
-} 
+}
 
 interface Orphanage {
     id: number;
@@ -29,18 +28,11 @@ interface Orphanage {
 
 function OrphanagesMap() {
     const [orphanages, setOrphanages] = useState<Orphanage[]>([]);
-    const [loading, setLoading] = useState<boolean>(false);
     
     useEffect(() => {
-        (async () => {
-            setLoading(true);
-            const response = await api.get('/orphanages');
-            const listOrphanages = response.data;
-
-            setOrphanages(listOrphanages);
-            
-            setLoading(false);
-        })();
+        api.get('/orphanages').then(response => {
+            setOrphanages(response.data);
+        });
     }, []);
 
     return (
@@ -89,7 +81,6 @@ function OrphanagesMap() {
             <Link to="/orphanages/create" className="create-orphanage has-shown" >
                 <FiPlus size={32} color="#fff" />
             </Link>
-            <Loading open={loading}/>
         </div>
     )
 }
