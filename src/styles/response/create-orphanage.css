@@ -1,0 +1,9 @@
+@media(max-width: 1020px){
+    aside.app-sidebar{
+        display: none !important;
+    }
+
+    form.create-orphanage-form{
+        margin: 0px;
+    }
+}

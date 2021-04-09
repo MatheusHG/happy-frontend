@@ -1,0 +1,12 @@
+@media (max-width: 1030px){
+    #page-landing .content-wrapper {
+        background: none;
+    }
+}
+
+@media (max-width: 550px){
+    .content-wrapper .location{
+        position: relative;
+        text-align: left;
+    }
+}

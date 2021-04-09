@@ -13,6 +13,7 @@ import { toast, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import '../styles/pages/create-orphanage.css';
+import '../styles/response/create-orphanage.css';
 
 
 function LightOrDark(){
